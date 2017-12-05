@@ -10,23 +10,28 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MainActivity extends ListActivity implements View.OnClickListener{
+public class MainActivity extends ListActivity implements View.OnClickListener, Serializable{
 
-    SimpleCursorAdapter mAdapter;
-
+    ArrayList<MyData> myDataList;
     String [] noteContent = {"FIRST", "SECOND","THIRD", "FOURTH"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MyData myDataArray[]=new MyData[]{
-                new MyData("item1",10),
-                new MyData("item2",20),
-                new MyData("item3",30)
-        };
+        myDataList.add( new MyData("item1",10));
+        myDataList.add(new MyData("item2",20));
+        myDataList.add(  new MyData("item3",30));
+
+        //android default adapter
       /*  ArrayAdapter<String> myAdapter=new
                 ArrayAdapter<String>(
                 this,
@@ -35,13 +40,14 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
         ListView myList=getListView();
         myList.setAdapter(myAdapter);*/
 
-        MyAdapter myAdapter=new
+        //custom adapter with predefined data
+        /*MyAdapter myAdapter=new
                 MyAdapter( this,
                 R.layout.mylayout,
-                myDataArray);
+                myDataList);
         ListView myList =
                getListView();
-        myList.setAdapter(myAdapter);
+        myList.setAdapter(myAdapter);*/
 
         Button bNewNote = findViewById(R.id.bNewNote);
         // TODO alternativa od this
@@ -69,10 +75,10 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
         myAdapt.notifyDataSetChanged();*/
 
         // **************** Array List ***************** \\
-        ArrayList<String> myArrayList=
+        /*ArrayList<String> myArrayList=
                 new ArrayList<String>();
 
-        /*ArrayAdapter<String> myAdapter=
+        ArrayAdapter<String> myAdapter=
                 new ArrayAdapter<String>(
                         this,
                         android.R.layout.simple_list_item_1,
@@ -93,6 +99,9 @@ getItemId(position) //get item id
 and
 getPosition(item)*/
     }
+
+
+
 
     @Override
     public void onClick(View view) {

@@ -12,14 +12,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MyAdapter extends ArrayAdapter<MyData> {
 
     private Context context;
     private int resource;
-    private MyData[] objects;
+    private List<MyData> objects;
     public MyAdapter(Context context,
                      int resource,
-                     MyData[] objects) {
+                     List<MyData> objects) {
         super(context, resource, objects);
         this.context=context;
         this.resource=resource;
@@ -37,9 +39,9 @@ public class MyAdapter extends ArrayAdapter<MyData> {
         TextView number=
                 row.findViewById(R.id.number);
         title.setText((CharSequence)
-                objects[position].myTitle);
+                objects.get(position).myTitle);
         number.setText(Integer.toString(
-                objects[position].myNum));
+                objects.get(position).myNum));
         return row;
     }
 }
