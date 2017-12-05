@@ -17,19 +17,46 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ListActivity implements View.OnClickListener, Serializable{
 
     ArrayList<MyData> myDataList;
+    ReadNote read;
+    WriteNote write;
     String [] noteContent = {"FIRST", "SECOND","THIRD", "FOURTH"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        init();
 
-        myDataList.add( new MyData("item1",10));
-        myDataList.add(new MyData("item2",20));
-        myDataList.add(  new MyData("item3",30));
+        // ****************************** End app code *********************** \\
+
+            //initial note
+            myDataList = new ArrayList<>();
+            read = new ReadNote(this);
+            write = new WriteNote(this);
+           // myDataList.add(new MyData("Initial Note", 1));
+           // write.serialize(myDataList);
+           // myDataList = read.deserialize();
+            // if we do not have any notes create the initial note
+            if(read.deserialize() == null) {
+                myDataList.add(new MyData("Initial Note", 1));
+            }
+
+            MyAdapter myAdapter=new
+                    MyAdapter( this,
+                    R.layout.mylayout,
+                    myDataList);
+            ListView myList =
+                    getListView();
+            myList.setAdapter(myAdapter);
+
+            write.serialize(myDataList);
+
+
+        // ********************** Adapter *********************** \\
 
         //android default adapter
       /*  ArrayAdapter<String> myAdapter=new
@@ -41,7 +68,11 @@ public class MainActivity extends ListActivity implements View.OnClickListener, 
         myList.setAdapter(myAdapter);*/
 
         //custom adapter with predefined data
-        /*MyAdapter myAdapter=new
+        /*myDataList = new ArrayList<>();
+        myDataList.add( new MyData("item1",10));
+        myDataList.add(new MyData("item2",20));
+        myDataList.add(  new MyData("item3",30));
+        MyAdapter myAdapter=new
                 MyAdapter( this,
                 R.layout.mylayout,
                 myDataList);
@@ -100,7 +131,11 @@ and
 getPosition(item)*/
     }
 
+    private void init() {
 
+
+
+    }
 
 
     @Override

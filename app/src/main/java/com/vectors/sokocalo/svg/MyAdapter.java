@@ -12,16 +12,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyAdapter extends ArrayAdapter<MyData> {
 
     private Context context;
     private int resource;
-    private List<MyData> objects;
+    private ArrayList<MyData> objects;
     public MyAdapter(Context context,
                      int resource,
-                     List<MyData> objects) {
+                     ArrayList<MyData> objects) {
         super(context, resource, objects);
         this.context=context;
         this.resource=resource;
