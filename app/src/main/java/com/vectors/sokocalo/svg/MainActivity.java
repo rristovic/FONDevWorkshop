@@ -26,6 +26,8 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
     ReadNote read;
     WriteNote write;
     String [] noteContent = {"FIRST", "SECOND","THIRD", "FOURTH"};
+    MyAdapter myAdapter;
+    ListView myList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,29 +41,25 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
             read = new ReadNote(this);
             write = new WriteNote(this);
 
-           // write.write();
-            write.writeNotes();
-           // myDataList = read.read();
 
-           // myDataList.add(new MyData("Initial Note", 1));
-           // write.serialize(myDataList);
-           // myDataList = read.deserialize();
-            // if we do not have any notes create the initial note
-            /*if(read.deserialize() == null) {
-                myDataList.add(new MyData("Initial Note", 1));
-            }
 
-            MyAdapter myAdapter=new
+            myDataList = read.readNotes();
+
+
+            myAdapter=new
                     MyAdapter( this,
                     R.layout.mylayout,
                     myDataList);
-            ListView myList =
+            myList =
                     getListView();
-            myList.setAdapter(myAdapter);*/
+            myList.setAdapter(myAdapter);
 
-          //  System.out.print(myDataList.get(0).myTitle);
 
-           // write.serialize(myDataList);
+        Button bNewNote = findViewById(R.id.bNewNote);
+        // TODO alternativa od this
+        bNewNote.setOnClickListener(this);
+        Button bClear = findViewById(R.id.bClear);
+        bClear.setOnClickListener(this);
 
 
         // ********************** Adapter *********************** \\
@@ -88,9 +86,6 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
                getListView();
         myList.setAdapter(myAdapter);*/
 
-        Button bNewNote = findViewById(R.id.bNewNote);
-        // TODO alternativa od this
-        bNewNote.setOnClickListener(this);
 
         // events when clicking an item
        /*AdapterView.OnItemClickListener mMessageClickedHandler =
@@ -151,22 +146,18 @@ getPosition(item)*/
         switch (view.getId()){
 
             case  R.id.bNewNote:
-                ArrayList<MyData> notes = read.readNotes();
-               // MyData data = read.read();
-                Button button = findViewById(R.id.bNewNote);
-               // button.setText(data.getMyTitle());
-                button.setText(notes.get(0).getMyTitle());
-                //TextView test = findViewById(R.id.test);
-               // test.setText(data.myTitle);
-               // Intent intentNewNote = new Intent(this, NewNoteActivity.class);
-               // startActivity(intentNewNote);
+
+                Intent intentNewNote = new Intent(this, NewNoteActivity.class);
+                startActivity(intentNewNote);
                 break;
             //about us dugme izbrisati nakon dodavanja list view-a
-            /*case R.id.bAboutUs:
+            case R.id.bClear:
 
-                Intent intentAboutUs = new Intent(this, AboutUsActivity.class);
-                startActivity(intentAboutUs);
-                break;*/
+                myAdapter.clear();
+                myDataList.clear();
+                write.writeNotes(myDataList);
+                myAdapter.notifyDataSetChanged();
+                break;
 
         }
     }
@@ -195,5 +186,12 @@ getPosition(item)*/
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myAdapter.clear();
+        myDataList = read.readNotes();
+        myAdapter.addAll(myDataList);
+        myAdapter.notifyDataSetChanged();
+    }
 }

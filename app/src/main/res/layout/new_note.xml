@@ -3,11 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvNewNote"
+    <EditText
+        android:id="@+id/etNote"
+        android:hint="Enter your note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Note" />
+        android:ems="10"
+        android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/bAddNote"

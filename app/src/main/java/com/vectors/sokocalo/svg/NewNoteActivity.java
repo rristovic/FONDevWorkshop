@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,11 +32,17 @@ public class NewNoteActivity extends AppCompatActivity implements View.OnClickLi
         switch(view.getId()){
 
             case R.id.bAddNote:
-                ArrayList<MyData> currentNotes = new ArrayList<>();
-               // currentNotes = read.read();
-
+                //********************** adding notes without typing them ***************** \\
+               /* ArrayList<MyData> currentNotes = new ArrayList<>();
+                currentNotes = read.readNotes();
                 currentNotes.add(new MyData("Note" , currentNotes.size()));
-               // write.serialize(currentNotes);
+                write.writeNotes(currentNotes);*/
+                EditText etNote = findViewById(R.id.etNote);
+                ArrayList<MyData> currentNotes = new ArrayList<>();
+                currentNotes = read.readNotes();
+                currentNotes.add(new MyData(etNote.getText().toString(),currentNotes.size()));
+                write.writeNotes(currentNotes);
+                finish();
                 break;
 
         }

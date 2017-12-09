@@ -34,7 +34,10 @@ public class ReadNote{
         try {
             input = new ObjectInputStream(new FileInputStream(new File(new File(context.getFilesDir(),"")+File.separator+filename)));
             notes = (ArrayList<MyData>) input.readObject();
-            Log.v("serialization","Person a="+notes.get(0).getMyTitle());
+            if(notes.isEmpty()){
+                notes.add(new MyData("first note", 0));
+            }
+//            Log.v("serialization","Person a="+notes.get(0).getMyTitle());
             input.close();
             return notes;
         } catch (StreamCorruptedException e) {
@@ -48,30 +51,6 @@ public class ReadNote{
             e.printStackTrace();
         }
         return empty;
-    }
-
-    public MyData read(){
-        MyData note = new MyData();
-        ObjectInputStream input;
-        String filename = "testFilemost.srl";
-
-        try {
-            input = new ObjectInputStream(new FileInputStream(new File(new File(context.getFilesDir(),"")+File.separator+filename)));
-            note = (MyData) input.readObject();
-            Log.v("serialization","Person a="+note.getMyTitle());
-            input.close();
-            return note;
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-            return new MyData("error", 0);
     }
 
 }

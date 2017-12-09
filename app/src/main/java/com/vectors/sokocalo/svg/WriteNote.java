@@ -21,10 +21,12 @@ public class WriteNote  {
         this.context = context;
     }
 
-    public void writeNotes(){
-         ArrayList<MyData> notes = new ArrayList<>();
-         notes.add(new MyData("test", 1));
-         notes.add(new MyData("test2", 2));
+    public void writeNotes(ArrayList<MyData> notes){
+        if(notes.isEmpty()) {
+             notes = new ArrayList<>();
+            notes.add(new MyData("first note", 1));
+        }
+
         String filename = "testFilemost.srl";
         ObjectOutput out = null;
 
@@ -38,24 +40,5 @@ public class WriteNote  {
             e.printStackTrace();
         }
     }
-
-    public void write(){
-       // ArrayList<MyData> notes = new ArrayList<>();
-       // notes.add(new MyData("test", 1));
-        MyData note = new MyData("NOTE",2);
-        String filename = "testFilemost.srl";
-        ObjectOutput out = null;
-
-        try {
-            out = new ObjectOutputStream(new FileOutputStream(new File(context.getFilesDir(),"")+File.separator+filename));
-            out.writeObject(note);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
 }
