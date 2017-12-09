@@ -40,9 +40,9 @@ public class MyAdapter extends ArrayAdapter<MyData> {
         TextView number=
                 row.findViewById(R.id.number);
         title.setText((CharSequence)
-                objects.get(position).myTitle);
+                objects.get(position).getMyTitle());
         number.setText(Integer.toString(
-                objects.get(position).myNum));
+                objects.get(position).getMyNum()));
         return row;
     }
 }

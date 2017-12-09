@@ -32,10 +32,10 @@ public class NewNoteActivity extends AppCompatActivity implements View.OnClickLi
 
             case R.id.bAddNote:
                 ArrayList<MyData> currentNotes = new ArrayList<>();
-                currentNotes = read.deserialize();
+               // currentNotes = read.read();
 
                 currentNotes.add(new MyData("Note" , currentNotes.size()));
-                write.serialize(currentNotes);
+               // write.serialize(currentNotes);
                 break;
 
         }

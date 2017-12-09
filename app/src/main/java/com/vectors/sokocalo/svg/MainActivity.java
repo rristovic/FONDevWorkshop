@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -19,7 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ListActivity implements View.OnClickListener, Serializable{
+public class MainActivity extends ListActivity implements View.OnClickListener{
 
     ArrayList<MyData> myDataList;
     ReadNote read;
@@ -37,11 +38,16 @@ public class MainActivity extends ListActivity implements View.OnClickListener, 
             myDataList = new ArrayList<>();
             read = new ReadNote(this);
             write = new WriteNote(this);
+
+           // write.write();
+            write.writeNotes();
+           // myDataList = read.read();
+
            // myDataList.add(new MyData("Initial Note", 1));
            // write.serialize(myDataList);
            // myDataList = read.deserialize();
             // if we do not have any notes create the initial note
-            if(read.deserialize() == null) {
+            /*if(read.deserialize() == null) {
                 myDataList.add(new MyData("Initial Note", 1));
             }
 
@@ -51,24 +57,26 @@ public class MainActivity extends ListActivity implements View.OnClickListener, 
                     myDataList);
             ListView myList =
                     getListView();
-            myList.setAdapter(myAdapter);
+            myList.setAdapter(myAdapter);*/
 
-            write.serialize(myDataList);
+          //  System.out.print(myDataList.get(0).myTitle);
+
+           // write.serialize(myDataList);
 
 
         // ********************** Adapter *********************** \\
 
         //android default adapter
-      /*  ArrayAdapter<String> myAdapter=new
+        /*ArrayAdapter<String> myAdapter=new
                 ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
                 noteContent);
         ListView myList=getListView();
-        myList.setAdapter(myAdapter);*/
+        myList.setAdapter(myAdapter);
 
         //custom adapter with predefined data
-        /*myDataList = new ArrayList<>();
+        myDataList = new ArrayList<>();
         myDataList.add( new MyData("item1",10));
         myDataList.add(new MyData("item2",20));
         myDataList.add(  new MyData("item3",30));
@@ -85,7 +93,7 @@ public class MainActivity extends ListActivity implements View.OnClickListener, 
         bNewNote.setOnClickListener(this);
 
         // events when clicking an item
-      /*  AdapterView.OnItemClickListener mMessageClickedHandler =
+       /*AdapterView.OnItemClickListener mMessageClickedHandler =
                 new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView parent,
                                             View v,
@@ -99,12 +107,12 @@ public class MainActivity extends ListActivity implements View.OnClickListener, 
                 mMessageClickedHandler);*/
 
         //n ************************ notifikacije Pormena Podataka *********************** \\
-        /*noteContent[0]="newdata";
+        noteContent[0]="newdata";
 
-        ArrayAdapter myAdapt=
+       /* ArrayAdapter myAdapt=
                 (ArrayAdapter) myList.getAdapter();
-        myAdapt.notifyDataSetChanged();*/
-
+        myAdapt.notifyDataSetChanged();
+*/
         // **************** Array List ***************** \\
         /*ArrayList<String> myArrayList=
                 new ArrayList<String>();
@@ -143,8 +151,15 @@ getPosition(item)*/
         switch (view.getId()){
 
             case  R.id.bNewNote:
-                Intent intentNewNote = new Intent(this, NewNoteActivity.class);
-                startActivity(intentNewNote);
+                ArrayList<MyData> notes = read.readNotes();
+               // MyData data = read.read();
+                Button button = findViewById(R.id.bNewNote);
+               // button.setText(data.getMyTitle());
+                button.setText(notes.get(0).getMyTitle());
+                //TextView test = findViewById(R.id.test);
+               // test.setText(data.myTitle);
+               // Intent intentNewNote = new Intent(this, NewNoteActivity.class);
+               // startActivity(intentNewNote);
                 break;
             //about us dugme izbrisati nakon dodavanja list view-a
             /*case R.id.bAboutUs:
