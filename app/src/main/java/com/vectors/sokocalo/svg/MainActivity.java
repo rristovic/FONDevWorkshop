@@ -1,13 +1,17 @@
 package com.vectors.sokocalo.svg;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -19,6 +23,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.vectors.sokocalo.svg.MyAdapter.BUNDLE_NOTE_KEY;
+import static com.vectors.sokocalo.svg.MyAdapter.BUNDLE_NUMBER_KEY;
 
 public class MainActivity extends ListActivity implements View.OnClickListener{
 
@@ -34,6 +41,9 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
         init();
 
+        SharedPreferences sharedPref =this.getPreferences(Context.MODE_PRIVATE);
+        int type = sharedPref.getInt(SettingsActivity.KEY_SHARED_PREFS_TYPE, 1);
+
         // ****************************** End app code *********************** \\
 
             //initial note
@@ -45,16 +55,40 @@ public class MainActivity extends ListActivity implements View.OnClickListener{
 
             myDataList = read.readNotes();
 
-
-            myAdapter=new
-                    MyAdapter( this,
-                    R.layout.mylayout,
-                    myDataList);
+            if(type == SettingsActivity.FIRST_TYPE) {
+                myAdapter = new
+                        MyAdapter(this,
+                        R.layout.mylayout,
+                        myDataList);
+            }
+            else {
+                myAdapter = new
+                        MyAdapter(this,
+                        R.layout.mylayout2,
+                        myDataList);
+            }
             myList =
                     getListView();
             myList.setAdapter(myAdapter);
 
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Intent mIntent = new Intent(MainActivity.this, NoteActivity.class);
+                Bundle mBundle = new Bundle();
+                TextView noteTitle = view.findViewById(R.id.title);
+                TextView noteNumber = view.findViewById(R.id.number);
+                mBundle.putString(BUNDLE_NOTE_KEY, noteTitle.getText().toString());
+                mBundle.putString(BUNDLE_NUMBER_KEY, noteNumber.getText().toString());
+
+                mIntent.putExtras(mBundle);
+
+                startActivity(mIntent);
+
+
+            }
+        });
         Button bNewNote = findViewById(R.id.bNewNote);
         // TODO alternativa od this
         bNewNote.setOnClickListener(this);
@@ -144,7 +178,6 @@ getPosition(item)*/
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
             case  R.id.bNewNote:
 
                 Intent intentNewNote = new Intent(this, NewNoteActivity.class);
@@ -158,7 +191,6 @@ getPosition(item)*/
                 write.writeNotes(myDataList);
                 myAdapter.notifyDataSetChanged();
                 break;
-
         }
     }
 

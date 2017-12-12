@@ -35,7 +35,7 @@ public class ReadNote{
             input = new ObjectInputStream(new FileInputStream(new File(new File(context.getFilesDir(),"")+File.separator+filename)));
             notes = (ArrayList<MyData>) input.readObject();
             if(notes.isEmpty()){
-                notes.add(new MyData("first note", 0));
+                //notes.add(new MyData("first note", 0));
             }
 //            Log.v("serialization","Person a="+notes.get(0).getMyTitle());
             input.close();

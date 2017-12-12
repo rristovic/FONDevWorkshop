@@ -24,7 +24,7 @@ public class WriteNote  {
     public void writeNotes(ArrayList<MyData> notes){
         if(notes.isEmpty()) {
              notes = new ArrayList<>();
-            notes.add(new MyData("first note", 1));
+            //notes.add(new MyData("first note", 1));
         }
 
         String filename = "testFilemost.srl";

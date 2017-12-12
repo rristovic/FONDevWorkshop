@@ -31,10 +31,10 @@
         android:id="@+id/bClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:text="Clear"
         app:layout_constraintStart_toEndOf="@+id/bNewNote"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintTop_toBottomOf="@+id/android:list" />
 
 </android.support.constraint.ConstraintLayout>
